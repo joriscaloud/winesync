@@ -1,0 +1,150 @@
+---
+description: winesync main rule
+globs: 
+alwaysApply: false
+---
+# .cursorrules File for winesync
+
+## Project Summary
+This project aims at scrolling through email, detect the ones that are wine orders, and add automatically the bought bottles to a google sheet.
+We'll try to authenticate to website with credentials and scrap them to enrich the excel sheet data.
+If not possible to fetch any data, we'll call an LLM.
+
+## Technical Stack
+- **Python**: Batch scripts, GSuite (email and Gsheet), Serialization, Clients, Scrapping, LLM call
+- **Docker**: Containerization for development and deployment
+
+## Code Style and Structure
+
+### Global
+Keep it simple, never over engineer a solution, add code or documents that were not asked for, don't add comments. 
+Iterate fraction by fraction, always go by the simplest solution in the code and ask if the user want to implement something
+more sophisticated if there is a concrete need.
+
+### File Organization
+- Use lowercase with underscores for directories and files (e.g., `services/mail/gmail.py`)
+- Organize API handler in the `api/` directory
+- Use `services/` for shared service components
+- Use `src/utils/` for utility functions and helpers
+- Leave `__init__.py` files empty unless they need to expose specific modules
+
+### Code Structure
+- Prefer functional components over classes where reasonable
+- Use plain functions for route handlers and utilities
+- Structure files in this order:
+  1. Imported modules
+  2. Class definitions
+  3. Route handlers/functions
+  4. Helper utilities
+  5. Static content
+
+### Naming Conventions
+- Use descriptive names with auxiliary verbs (e.g., `is_exclusive`, `has_feedback`)
+- Start private variables with an underscore
+- Use UPPER_SNAKE_CASE for constants
+- Use snake_case for functions, variables, and modules
+- Use CamelCase for classes
+
+### Function Patterns
+- Use pure functions where possible
+- Use type hints for all function signatures
+- Implement the Receive an Object, Return an Object (RORO) pattern
+- Keep functions small, focused, and with a single responsibility
+
+## Error Handling
+- Handle errors and edge cases at the beginning of functions (guard clauses)
+- Use early returns to avoid deeply nested conditionals
+- Don't wrap code in try-except blocks unless you're catching a specific exception
+- Use appropriate HTTP status codes for expected errors
+- Use the redis_client_failover decorator for Redis operations that need fallback strategies
+- Log errors with appropriate severity levels
+- For cache misses, implement proper fallback strategies using database queries
+- Include relevant context in error messages to aid debugging
+- Implement custom exception types for domain-specific errors
+
+## Printing and Logging
+- Use the logger from utils.logs.log for all logging needs
+- Use appropriate log levels (info, warning, error) based on the severity
+- Include relevant context in log messages
+- Avoid print statements in production code
+- Use structured logging where appropriate (dictionaries for log fields)
+- Include timing information for performance-critical operations
+
+## Dependencies
+- Define environment variables and configurations in api/config/__init__.py
+- Use dependency injection for services and repositories
+- Manage database connections through the ORM layer
+- Use connection pooling for database operations
+- Follow the singleton pattern for shared resources like MLResourcesHandler
+
+## Configuration
+- Store configuration in the appropriate config files under projects/config/
+- Use environment-specific configuration for local, staging, and production
+- Access configuration through the config modules rather than hardcoding values
+- Store sensitive information in AWS Secret Manager (retrieved during application startup)
+- Use .env files for local development configuration
+
+## Database Operations
+- Implement connection pooling for efficient resource utilization
+- Use transactions for operations that require atomicity
+- Apply proper indexing strategies for query optimization
+- Implement retry mechanisms for transient database errors
+
+## Clean Code
+- Write clean, readable, and maintainable code
+- Keep functions small and focused
+- Use descriptive variable and function names
+- Follow the established patterns in the codebase
+- Use type hints where appropriate
+- Use DataFrame operations efficiently to minimize memory usage
+- Apply vectorized operations where possible for performance
+- Keep the code DRY (Don't Repeat Yourself)
+- After fixing an issue, mention the case in the docstring so future changes won't break it again
+- Don't add useless comments that repeat exactly what the code already says
+- Always use context7 when I need code generation, setup or configuration steps, or
+library/API documentation. This means you should automatically use the Context7 MCP
+tools to resolve library id and get library docs without me having to explicitly ask.
+
+## Rewrite, Improve, and Refactor
+- Do NOT re-invent the wheel or overengineer what is asked
+- Keep changes as concise as possible
+- When refactoring or fixing code, make sure to keep the code clean and easy to understand without duplicating code
+- Keep the code DRY (Don't Repeat Yourself)
+- After fixing an issue, mention the case in the docstring so future changes won't break it again
+- Consider performance implications when refactoring, especially for data processing operations
+- Use timing decorators to measure performance impact of changes
+
+## Debugging
+- If you are not sure what the solution is, add debug logs to the code and run the tests
+- After fixing an issue, remove debug logs
+- Use the logger for debugging rather than print statements
+- Consider adding metrics for critical paths to aid in identifying performance bottlenecks
+- Review logs to understand the flow of execution
+
+## Memory
+- When you need to remember something, update the .cursormemory.md file
+- Refer to the .cursormemory.md file to view the memory
+- Update the memory with project specifications, requirements, flow of the code, and other relevant information
+- Keep track of critical performance metrics and bottlenecks
+
+## Development Flow
+- Run tests to verify functionality
+- Use Make commands for common tasks
+- Follow the established patterns for new features
+- Test thoroughly in local environment
+- Create proper release tags for deployment
+
+## Project-Specific Guidelines
+
+### Data Processing
+- Use vectorized operations where possible for performance
+- Consider memory usage for large data processing operations
+- Use appropriate chunking strategies for large datasets
+- Implement proper error handling for data processing failures
+- Log relevant metrics for data processing steps
+
+### Planning
+- Always plan the code before writing it
+- Think about how the new code will fit into the existing codebase
+- Consider the impact on existing functionality and performance
+- Design with scalability in mind, particularly for data processing operations
