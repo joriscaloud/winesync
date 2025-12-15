@@ -1,15 +1,15 @@
 GMAIL_EMAIL = "your.email@gmail.com"
 GMAIL_PASSWORD = "REDACTED"
 
-ANTHROPIC_API_KEY = "your_anthropic_api_key"
+ANTHROPIC_API_KEY = "wazaaaaa"
 
 GMAIL_MAX_RESULTS = 100
 MAX_LLM_CALLS_PER_RUN = 50
 
 # Google Sheets
 GOOGLE_SHEET_ID = "id_of_your_sheet"
-GOOGLE_SHEET_WORKSHEET = "name_of_your_worksheet"  
-GOOGLE_SERVICE_ACCOUNT_FILE = "path_to_your_service_account_file"
+GOOGLE_SHEET_WORKSHEET = "bla"  
+GOOGLE_SERVICE_ACCOUNT_FILE = "wazaaaaa"
 
 WINE_ORDER_KEYWORDS = [
     "wine order",
